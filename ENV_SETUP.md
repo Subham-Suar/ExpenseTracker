@@ -26,12 +26,7 @@ Your ExpenseTracker application now uses environment variables to securely manag
    npm install
    ```
 
-2. **Create your `.env` file**:
-   ```bash
-   cp .env.example .env
-   ```
-
-3. **Edit `backend/.env` with your actual values**:
+2. **Edit `backend/.env` with your actual values**:
    ```env
    PORT=4000
    FRONTEND_URL=http://localhost:5173,http://127.0.0.1:5173
@@ -58,13 +53,7 @@ Your ExpenseTracker application now uses environment variables to securely manag
 
 ### Frontend Setup
 
-1. **Create your `.env` file**:
-   ```bash
-   cd frontend
-   cp .env.example .env
-   ```
-
-2. **Edit `frontend/.env`**:
+1. **Edit `frontend/.env`**:
    ```env
    VITE_API_URL=http://localhost:4000/api
    
@@ -132,7 +121,7 @@ If you want to enable email export functionality:
 
 ✅ **Rotate JWT_SECRET regularly** in production
 ✅ **Use strong, unique passwords** for database and email
-✅ **Keep .env.example** updated with new variables
+✅ **Environment variables are documented directly in .env files**
 ✅ **Use different secrets** for dev and production
 ✅ **Store production secrets** in your deployment platform
 

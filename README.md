@@ -14,7 +14,6 @@ ExpenseTracker/
 │   ├── models/                 # MongoDB schemas
 │   ├── routes/                 # API routes
 │   ├── utils/                  # Helper functions
-│   ├── .env.example            # Environment template
 │   ├── .env                    # Environment variables (DO NOT COMMIT)
 │   ├── .gitignore              # Git ignore rules
 │   ├── server.js               # Express server entry point
@@ -30,7 +29,6 @@ ExpenseTracker/
 │   │   ├── App.jsx             # Main App component
 │   │   ├── main.jsx            # Vite entry point
 │   │   └── index.css           # Global styles
-│   ├── .env.example            # Environment template
 │   ├── .env                    # Environment variables (DO NOT COMMIT)
 │   ├── .gitignore              # Git ignore rules
 │   ├── vite.config.js          # Vite configuration
@@ -39,8 +37,6 @@ ExpenseTracker/
 │   └── eslint.config.js        # ESLint configuration
 │
 ├── .gitignore                  # Root .gitignore
-├── .env.example               # Root environment template (if needed)
-├── package.json               # Root package.json (mono-repo)
 ├── ENV_SETUP.md               # Environment setup guide
 └── README.md                  # This file
 ```
@@ -66,9 +62,8 @@ ExpenseTracker/
    ```
 
 3. **Configure environment variables**
-   - Copy backend/.env.example to backend/.env
-   - Copy frontend/.env.example to frontend/.env
-   - Update with your actual values (see [ENV_SETUP.md](./ENV_SETUP.md))
+   - Backend: Edit `backend/.env` with your actual values
+   - Frontend: Edit `frontend/.env` with your actual values
 
 ### Development
 

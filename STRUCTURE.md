@@ -41,7 +41,6 @@ ExpenseTracker/
 │   │   └── dateFilter.js               # Date filtering utilities
 │   │
 │   ├── .env                            # 🔐 Environment variables (DO NOT COMMIT)
-│   ├── .env.example                    # Template for environment setup
 │   ├── .gitignore                      # Git ignore rules for backend
 │   ├── package.json                    # Backend dependencies & scripts
 │   ├── package-lock.json               # Locked dependency versions
@@ -83,7 +82,6 @@ ExpenseTracker/
 │   ├── 📂 public/                       # Static assets served as-is
 │   │
 │   ├── .env                            # 🔐 Environment variables (DO NOT COMMIT)
-│   ├── .env.example                    # Template for environment setup
 │   ├── .gitignore                      # Git ignore rules for frontend
 │   ├── eslint.config.js                # ESLint configuration
 │   ├── index.html                      # HTML entry point
@@ -96,7 +94,6 @@ ExpenseTracker/
 │
 ├── .git/                               # Git repository metadata
 ├── .env                                # 🔐 Root environment (if needed)
-├── .env.example                        # Root environment template
 ├── .gitignore                          # Root git ignore rules
 ├── DEPLOYMENT.md                       # 🚀 Deployment guide
 ├── ENV_SETUP.md                        # 🔐 Environment setup guide
@@ -115,7 +112,7 @@ ExpenseTracker/
 | `server.js` | Express app initialization, middleware setup, route definitions |
 | `package.json` | Dependencies (express, mongoose, jwt, etc.) & npm scripts |
 | `.env` | Production secrets (MONGODB_URI, JWT_SECRET, SMTP creds) |
-| `.env.example` | Template showing all available env variables |
+| `.env` | Environment variables with documentation and actual values |
 
 ### Backend Config
 | File | Purpose |
@@ -189,7 +186,7 @@ ExpenseTracker/
 | File | Purpose |
 |------|---------|
 | `package.json` | Mono-repo scripts managing frontend & backend |
-| `.env.example` | Template for root environment variables |
+| `.env` | Environment variables with documentation and actual values |
 | `.gitignore` | Files to exclude from git (node_modules, .env, etc.) |
 | `Procfile` | Heroku deployment configuration |
 | `README.md` | Project overview, quick start, features |
@@ -203,7 +200,7 @@ Files that should NEVER be committed:
 - `.env` - Contains secrets
 - `node_modules/` - Dependencies (regenerated from package.json)
 - `.env.local` - Local overrides
-- Any `.env.*` files except `.env.example`
+- Any `.env.*` files
 
 These are protected by `.gitignore` files in each directory.
 
