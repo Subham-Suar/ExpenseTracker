@@ -4,7 +4,7 @@ import { loadSession } from "./session";
 const defaultApiBase =
   import.meta.env.DEV && !import.meta.env.VITE_API_URL
     ? "/api"
-    : import.meta.env.VITE_API_URL || "http://localhost:4000/api";
+    : import.meta.env.VITE_API_URL || "https://expensetracker-8jtv.onrender.com";
 
 const api = axios.create({
   baseURL: defaultApiBase,
