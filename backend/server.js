@@ -78,7 +78,7 @@ app.get('/', (req, res) => {
 
 // SPA fallback: Serve index.html for all non-API routes in production
 if (isProduction) {
-  app.get('/*', (req, res) => {
+  app.use((req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/dist/index.html'));
   });
 }
