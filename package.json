@@ -1,0 +1,22 @@
+{
+  "name": "expense-tracker",
+  "version": "1.0.0",
+  "description": "A modern expense tracking application with React frontend and Node.js backend",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install && cd ..",
+    "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
+    "build": "cd frontend && npm run build",
+    "build:prod": "npm run build && cd backend && npm start",
+    "start": "cd backend && npm start",
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd frontend && npm run dev"
+  },
+  "keywords": ["expense", "tracker", "finance", "budget"],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
