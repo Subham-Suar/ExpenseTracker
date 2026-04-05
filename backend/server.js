@@ -14,7 +14,7 @@ const isProduction = process.env.NODE_ENV === 'production';
 
 const app = express();
 const port = Number(process.env.PORT) || 4000;
-const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173,http://127.0.0.1:5173")
+const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173,http://127.0.0.1:5173,https://expense-tracker-iwc7.vercel.app")
   .split(",")
   .map((origin) => origin.trim());
 
@@ -46,8 +46,12 @@ app.use(
       return callback(new Error("Origin not allowed by CORS"));
     },
     credentials: true,
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
+app.options("*", cors());
+app.options("*", cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}))
 
@@ -62,6 +66,7 @@ connectDB();
 
 //ROUTES
 app.use("/api/user", userRouter);
+app.use("/user", userRouter);
 app.use("/api/income", incomeRouter);
 app.use("/api/expense", expenseRouter);
 app.use("/api/dashboard", dashboardRouter);

@@ -1,10 +1,11 @@
 import axios from "axios";
 import { loadSession } from "./session";
 
-const defaultApiBase =
-  import.meta.env.DEV && !import.meta.env.VITE_API_URL
-    ? "/api"
-    : import.meta.env.VITE_API_URL || "https://expensetracker-8jtv.onrender.com";
+const configuredApiUrl = import.meta.env.VITE_API_URL || "https://expensetracker-8jtv.onrender.com";
+const apiUrl = configuredApiUrl.endsWith("/api")
+  ? configuredApiUrl
+  : configuredApiUrl.replace(/\/$/, "") + "/api";
+const defaultApiBase = import.meta.env.DEV && !import.meta.env.VITE_API_URL ? "/api" : apiUrl;
 
 const api = axios.create({
   baseURL: defaultApiBase,

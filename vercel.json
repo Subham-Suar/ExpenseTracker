@@ -5,9 +5,25 @@
             "routePrefix": "/",
             "framework": "vite"
         },
-        "backend": {
+            "backend": {
             "entrypoint": "backend",
             "routePrefix": "/_/backend"
         }
-    }
+    },
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/_\/backend/(.*)",
+            "dest": "/_/backend/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/"
+        }
+    ]
 }
