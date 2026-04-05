@@ -62,6 +62,7 @@ button {
   flex: 1;
   min-width: 0;
   padding: 24px;
+  padding-top: 24px;
 }
 
 .app-content {
@@ -1570,6 +1571,10 @@ tbody tr + tr td {
 @media (max-width: 900px) {
   .app-shell {
     flex-direction: column;
+  }
+
+  .app-main {
+    padding-top: 88px;
   }
 
   .sidebar,

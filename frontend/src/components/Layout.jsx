@@ -13,7 +13,7 @@ function Layout({ onLogout, user }) {
         isCollapsed={sidebarCollapsed}
         setIsCollapsed={setSidebarCollapsed}
       />
-      <div className="app-main">
+      <div className="app-main pt-20 md:pt-0">
         <Navbar user={user} onLogout={onLogout} />
         <main className="app-content">
           <Outlet />
