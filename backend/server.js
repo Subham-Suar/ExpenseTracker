@@ -36,6 +36,11 @@ function isAllowedOrigin(origin) {
 }
 
 //MIDDLEWARES
+
+app.use(cors({
+  origin: "https://expense-tracker-iwc7.vercel.app",
+  credentials: true
+}));
 app.use(
   cors({
     origin(origin, callback) {
