@@ -22,16 +22,19 @@ const menuItems = [
   { label: "Profile", path: "/profile", icon: Settings },
 ];
 
-export default function Sidebar({ user, isCollapsed, setIsCollapsed }) {
-  // State to handle mobile drawer open/close
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
+export default function Sidebar({ user, isCollapsed, setIsCollapsed, mobileOpen, setMobileOpen }) {
   // Auto-collapse on smaller screens
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-      if (window.innerWidth < 768) setIsCollapsed(false);
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      if (mobile) {
+        setIsCollapsed(false);
+      } else {
+        setMobileOpen(false);
+      }
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -53,17 +56,17 @@ export default function Sidebar({ user, isCollapsed, setIsCollapsed }) {
             <WalletCards size={24} />
             <span>Equity Ledger</span>
           </div>
-          <button onClick={() => setIsMobileOpen(!isMobileOpen)} className="p-2 bg-slate-800 rounded-lg text-slate-300">
-            {isMobileOpen ? <X size={20} /> : <Menu size={20} />}
+          <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 bg-slate-800 rounded-lg text-slate-300">
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
       )}
 
       {/* Mobile Overlay Backdrop */}
-      {isMobile && isMobileOpen && (
+      {isMobile && mobileOpen && (
         <div 
           className="fixed inset-0 bg-slate-900/50 z-40 md:hidden"
-          onClick={() => setIsMobileOpen(false)}
+          onClick={() => setMobileOpen(false)}
         />
       )}
 
@@ -71,15 +74,15 @@ export default function Sidebar({ user, isCollapsed, setIsCollapsed }) {
       <MotionAside
         initial={false}
         animate={{ 
-          width: isMobile ? (isMobileOpen ? 256 : 0) : (isCollapsed ? 80 : 256),
-          x: isMobile && !isMobileOpen ? -256 : 0 
+          width: isMobile ? (mobileOpen ? 256 : 0) : (isCollapsed ? 80 : 256),
+          x: isMobile && !mobileOpen ? -256 : 0 
         }}
         className="fixed md:sticky top-0 left-0 h-screen bg-slate-900 border-r border-slate-800 flex flex-col z-50 shadow-[0_0_20px_rgba(0,0,0,0.3)] md:shadow-none overflow-hidden"
       >
         {/* Brand Header */}
         <NavLink
           to="/"
-          onClick={() => isMobile && setIsMobileOpen(false)}
+          onClick={() => isMobile && setMobileOpen(false)}
           className="flex items-center p-5 min-h-[80px] relative group"
         >
           <div className="p-2 bg-gradient-to-br from-sky-400 to-blue-600 text-white rounded-xl flex-shrink-0 z-10 shadow-md shadow-sky-500/20 transition-transform group-hover:-translate-y-0.5">
@@ -121,7 +124,7 @@ export default function Sidebar({ user, isCollapsed, setIsCollapsed }) {
               key={path}
               to={path}
               end={end}
-              onClick={() => isMobile && setIsMobileOpen(false)} // Auto-close on mobile selection
+              onClick={() => isMobile && setMobileOpen(false)} // Auto-close on mobile selection
               className={({ isActive }) => `
                 relative flex items-center px-3 py-3 rounded-xl cursor-pointer group transition-all duration-200
                 ${isActive 
@@ -164,7 +167,7 @@ export default function Sidebar({ user, isCollapsed, setIsCollapsed }) {
         <div className="p-4 border-t border-slate-800 mb-2">
           <NavLink
             to="/profile"
-            onClick={() => isMobile && setIsMobileOpen(false)}
+            onClick={() => isMobile && setMobileOpen(false)}
             className="flex items-center p-2 rounded-xl hover:bg-slate-800/80 transition-colors group"
           >
             <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-sky-500 to-emerald-500 text-white flex items-center justify-center font-bold flex-shrink-0 shadow-sm transition-transform group-hover:scale-105">

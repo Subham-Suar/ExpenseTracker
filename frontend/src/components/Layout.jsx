@@ -5,6 +5,7 @@ import Sidebar from "./Sidebar";
 
 function Layout({ onLogout, user }) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   return (
     <div className="app-shell">
@@ -12,9 +13,11 @@ function Layout({ onLogout, user }) {
         user={user}
         isCollapsed={sidebarCollapsed}
         setIsCollapsed={setSidebarCollapsed}
+        mobileOpen={mobileSidebarOpen}
+        setMobileOpen={setMobileSidebarOpen}
       />
       <div className="app-main pt-20 md:pt-0">
-        <Navbar user={user} onLogout={onLogout} />
+        <Navbar user={user} onLogout={onLogout} onToggleSidebar={() => setMobileSidebarOpen((prev) => !prev)} />
         <main className="app-content">
           <Outlet />
         </main>

@@ -46,7 +46,7 @@
 
 // export default Navbar;
 import React, { useState, useEffect } from "react";
-import { Bell, CalendarRange, LogOut, Search, X, ChevronDown } from "lucide-react";
+import { Bell, CalendarRange, LogOut, Search, X, ChevronDown, Menu } from "lucide-react";
 import "./Navbar.css"; // Make sure to link the CSS file below
 
 const formatDisplayDate = () =>
@@ -56,7 +56,7 @@ const formatDisplayDate = () =>
     year: "numeric",
   }).format(new Date());
 
-function Navbar({ user, onLogout }) {
+function Navbar({ user, onLogout, onToggleSidebar }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -77,6 +77,14 @@ function Navbar({ user, onLogout }) {
     <header className={`topbar ${isScrolled ? "topbar-scrolled" : ""}`}>
       {/* Search Section with Focus Animations */}
       <div className={`topbar-search ${isSearchFocused ? "search-focused" : ""}`}>
+        <button
+          className="mobile-menu-button md:hidden mr-3 p-2 rounded-xl bg-slate-800 text-slate-300"
+          type="button"
+          aria-label="Toggle menu"
+          onClick={onToggleSidebar}
+        >
+          <Menu size={18} />
+        </button>
         <Search size={18} className="search-icon" />
         <input
           type="text"
