@@ -69,6 +69,12 @@ button {
   padding-top: 24px;
 }
 
+@media (max-width: 900px) {
+  .app-main {
+    padding-top: 112px;
+  }
+}
+
 .sidebar {
   width: 280px;
   padding: 24px 18px;

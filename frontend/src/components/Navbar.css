@@ -156,6 +156,49 @@
   100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
 }
 
+/* --- Responsive Mobile Adjustments --- */
+@media (max-width: 900px) {
+  .topbar {
+    padding: 0.75rem 1rem;
+    top: 68px;
+  }
+
+  .topbar-search {
+    width: min(100%, 240px);
+  }
+
+  .topbar-search.search-focused {
+    width: 100%;
+  }
+
+  .topbar-actions {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 0.75rem;
+  }
+
+  .profile-chip,
+  .date-pill,
+  .logout-button {
+    width: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  .topbar {
+    padding: 0.75rem 0.75rem;
+    top: 68px;
+  }
+
+  .topbar-search {
+    width: 100%;
+  }
+
+  .topbar-actions {
+    gap: 0.5rem;
+  }
+}
+
 /* --- Interactive Profile Chip --- */
 .profile-chip {
   display: flex;
