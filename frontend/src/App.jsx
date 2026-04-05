@@ -11,7 +11,7 @@ import Profile from "./pages/Profile";
 import Auth from "./pages/Auth";
 import { clearSession, loadSession, saveSession } from "./lib/session";
 import { getApiError, getCurrentUser } from "./lib/api";
-
+ //function
 function App() {
   const [session, setSession] = useState(() => loadSession());
   const [bootstrapping, setBootstrapping] = useState(Boolean(loadSession().token));
