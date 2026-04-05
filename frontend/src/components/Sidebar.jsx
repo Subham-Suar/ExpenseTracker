@@ -39,7 +39,7 @@ export default function Sidebar({ user, isCollapsed, setIsCollapsed, mobileOpen,
     handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [setIsCollapsed]);
+  }, [setIsCollapsed, setMobileOpen]);
 
   // Framer Motion variants for text animations
   const textVariants = {
@@ -49,19 +49,6 @@ export default function Sidebar({ user, isCollapsed, setIsCollapsed, mobileOpen,
 
   return (
     <>
-      {/* Mobile Header & Hamburger Menu */}
-      {isMobile && (
-        <div className="md:hidden flex items-center justify-between p-4 bg-slate-900 border-b border-slate-800 fixed top-0 w-full z-40">
-          <div className="flex items-center gap-2 text-sky-400 font-bold">
-            <WalletCards size={24} />
-            <span>Equity Ledger</span>
-          </div>
-          <button onClick={() => setMobileOpen(!mobileOpen)} className="p-2 bg-slate-800 rounded-lg text-slate-300">
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
-          </button>
-        </div>
-      )}
-
       {/* Mobile Overlay Backdrop */}
       {isMobile && mobileOpen && (
         <div 
@@ -77,7 +64,8 @@ export default function Sidebar({ user, isCollapsed, setIsCollapsed, mobileOpen,
           width: isMobile ? (mobileOpen ? 256 : 0) : (isCollapsed ? 80 : 256),
           x: isMobile && !mobileOpen ? -256 : 0 
         }}
-        className="fixed md:sticky top-0 left-0 h-screen bg-slate-900 border-r border-slate-800 flex flex-col z-50 shadow-[0_0_20px_rgba(0,0,0,0.3)] md:shadow-none overflow-hidden"
+        style={isMobile ? { top: 68, height: "calc(100vh - 68px)" } : {}}
+        className="fixed md:sticky left-0 h-screen bg-slate-900 border-r border-slate-800 flex flex-col z-50 shadow-[0_0_20px_rgba(0,0,0,0.3)] md:shadow-none overflow-hidden"
       >
         {/* Brand Header */}
         <NavLink
