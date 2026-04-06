@@ -91,14 +91,14 @@ npm run frontend
    npm run build
    ```
 
-2. **Set production environment**
+2. **Start the production server**
    ```bash
-   export NODE_ENV=production
+   npm run start:prod
    ```
 
-3. **Start the server** (serves both API and frontend)
+   Or run both build and production start from the root:
    ```bash
-   npm start
+   npm run prod
    ```
 
 The server will run on port 4000 and serve the React app.
@@ -111,6 +111,8 @@ npm run install:all        # Install dependencies for all packages
 npm run dev               # Run backend and frontend concurrently (dev)
 npm run build             # Build frontend production bundle
 npm run start             # Start backend server
+npm run start:prod        # Start backend in production mode (NODE_ENV=production)
+npm run prod              # Build frontend and start production server
 npm run backend           # Start only backend
 npm run frontend          # Start only frontend (dev)
 ```

@@ -82,7 +82,15 @@ npm run dev
 
 ### Production
 
-Before deploying, ensure all required environment variables are set in your deployment platform (Vercel, Heroku, AWS, etc.)
+From the project root, build the frontend and start the backend with production mode:
+```bash
+npm run prod
+```
+
+To only start the backend in production mode after building the frontend separately:
+```bash
+npm run start:prod
+```
 
 ---
 

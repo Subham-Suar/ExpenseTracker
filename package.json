@@ -8,8 +8,10 @@
     "install:all": "npm install && cd backend && npm install && cd ../frontend && npm install && cd ..",
     "dev": "concurrently \"cd backend && npm run dev\" \"cd frontend && npm run dev\"",
     "build": "cd frontend && npm run build",
-    "build:prod": "npm run build && cd backend && npm start",
+    "build:prod": "npm run build",
     "start": "cd backend && npm start",
+    "start:prod": "cross-env NODE_ENV=production cd backend && npm start",
+    "prod": "npm run build && npm run start:prod",
     "backend": "cd backend && npm run dev",
     "frontend": "cd frontend && npm run dev"
   },
@@ -17,6 +19,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3"
   }
 }
