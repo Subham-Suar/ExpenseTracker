@@ -135,6 +135,7 @@ const CustomBarTooltip = ({ active, payload, label }) => {
 export default function Income() {
   const [incomeData, setIncomeData] = useState([]);
 
+//calculations------
   // --- Statistical Calculations ---
   const stats = useMemo(() => {
     if (!Array.isArray(incomeData) || incomeData.length === 0) {
