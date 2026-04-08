@@ -12,7 +12,7 @@ import {
   ArrowLeft,
   CheckCircle2,
 } from "lucide-react";
-import { getApiError, loginUser, registerUser } from "../lib/api";
+import { getApiError, loginUser, registerUser, requestPasswordReset } from "../lib/api";
 
 const MotionDiv = motion.div;
 
@@ -50,6 +50,7 @@ function Auth({ mode, onAuthSuccess }) {
   const [forgotEmail, setForgotEmail] = useState("");
   const [resetSent, setResetSent] = useState(false);
   const [resetSubmitting, setResetSubmitting] = useState(false);
+  const [resetError, setResetError] = useState("");
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -74,18 +75,23 @@ function Auth({ mode, onAuthSuccess }) {
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
+    setResetError("");
     setResetSubmitting(true);
-    
-    // Simulate password reset request
-    setTimeout(() => {
+
+    try {
+      await requestPasswordReset({ email: forgotEmail });
       setResetSent(true);
-      setResetSubmitting(false);
       setTimeout(() => {
         setShowForgotPassword(false);
         setResetSent(false);
         setForgotEmail("");
+        setResetError("");
       }, 3000);
-    }, 1000);
+    } catch (resetRequestError) {
+      setResetError(getApiError(resetRequestError, "Unable to send reset link"));
+    } finally {
+      setResetSubmitting(false);
+    }
   };
 
   const isPasswordError = error && error.toLowerCase().includes("password");
@@ -345,6 +351,12 @@ function Auth({ mode, onAuthSuccess }) {
                       />
                     </div>
                   </div>
+
+                  {resetError ? (
+                    <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+                      {resetError}
+                    </div>
+                  ) : null}
 
                   <motion.button
                     whileHover={{ y: -2 }}

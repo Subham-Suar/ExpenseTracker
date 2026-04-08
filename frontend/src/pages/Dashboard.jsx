@@ -151,6 +151,11 @@ function Dashboard({ user }) {
   const spent = overview?.monthlyExpense || 0;
   const currentCashFlow = income - spent;
   const savings = Math.max(0, currentCashFlow);
+  const balanceValue = overview?.savings ?? savings;
+  const savedPercentLabel = income > 0 ? Math.min(100, Math.round((savings / income) * 100)) : 0;
+  const incomePercent = income > 0 ? 100 : 0;
+  const spentPercent = income > 0 ? Math.min(100, Math.round((spent / income) * 100)) : 0;
+  const savingsPercent = income > 0 ? Math.min(100, Math.round((savings / income) * 100)) : 0;
 
   const baseValue = currentCashFlow || 5000;
   const chartData = useMemo(() => {
@@ -192,29 +197,24 @@ function Dashboard({ user }) {
     });
   }, [overview]);
 
-  const incomePercent = income > 0 ? 100 : 0;
-  const spentPercent = income > 0 ? Math.min(100, Math.round((spent / income) * 100)) : 0;
-  const savingsPercent = income > 0 ? Math.min(100, Math.round((savings / income) * 100)) : 0;
-
   return (
     <MotionDiv
       initial="hidden"
       animate="visible"
       variants={containerVars}
-      className="p-6 lg:p-10 bg-slate-900 min-h-screen w-full font-sans text-slate-200"
+      className="p-4 xs:p-6 sm:p-8 lg:p-10 bg-slate-900 min-h-screen w-full font-sans text-slate-200 space-y-6 xs:space-y-8"
     >
       <MotionDiv
         variants={itemVars}
-        whileHover={{ y: -2 }}
         transition={{ duration: 0.35, ease: "easeOut" }}
-        className="dashboard-header relative overflow-hidden rounded-3xl border border-slate-800/70 bg-slate-950/70 p-6 lg:p-8 mb-8"
+        className="dashboard-header interactive-card relative overflow-hidden rounded-2xl xs:rounded-3xl border border-slate-800/70 bg-slate-950/70 p-4 xs:p-6 sm:p-8 lg:p-10 mb-6 xs:mb-8 hover:shadow-[0_20px_60px_-25px_rgba(15,23,42,0.95)] transition-shadow duration-200"
       >
         <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-r from-sky-500/10 via-fuchsia-500/10 to-emerald-500/10 blur-3xl opacity-80" />
         <div className="relative">
-          <h1 className="text-4xl font-extrabold tracking-tight text-slate-100">
+          <h1 className="text-1.5xl xs:text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-slate-100 leading-tight">
             Welcome, {user?.name || "there"}
           </h1>
-          <p className="text-slate-500 mt-2 max-w-2xl">
+          <p className="text-xs xs:text-sm text-slate-500 mt-2 max-w-2xl leading-relaxed">
             Experience a modern expense tracker theme with motion-driven analytics, clear spending insights, and budget-aware visuals.
           </p>
         </div>
@@ -225,25 +225,25 @@ function Dashboard({ user }) {
 
       {!loading && overview ? (
         <>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+          <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-4 xs:gap-5 sm:gap-6 lg:gap-8 mb-8 xs:mb-10">
             {[
               {
                 title: "Balance",
-                amount: formatCurrency(overview.savings),
+                amount: formatCurrency(balanceValue),
                 icon: <CreditCard />,
                 iconClass: "bg-sky-400/10 text-sky-400",
                 textClass: "text-sky-400",
               },
               {
                 title: "Monthly Income",
-                amount: formatCurrency(overview.monthlyIncome),
+                amount: formatCurrency(income),
                 icon: <TrendingUp />,
                 iconClass: "bg-green-500/10 text-green-500",
                 textClass: "text-green-500",
               },
               {
                 title: "Monthly Expense",
-                amount: formatCurrency(overview.monthlyExpense),
+                amount: formatCurrency(spent),
                 icon: <TrendingDown />,
                 iconClass: "bg-red-500/10 text-red-500",
                 textClass: "text-red-500",
@@ -252,23 +252,22 @@ function Dashboard({ user }) {
               <MotionDiv
                 key={card.title}
                 variants={itemVars}
-                whileHover={{ y: -6, scale: 1.01 }}
                 transition={{ duration: 0.35, ease: "easeOut" }}
-                className={`bg-slate-800/95 backdrop-blur-xl p-8 rounded-[28px] shadow-[0_25px_80px_-40px_rgba(15,23,42,0.8)] border border-slate-700/80 flex flex-col justify-between h-48`}
+                className={`interactive-card bg-slate-800/95 backdrop-blur-xl p-4 xs:p-5 sm:p-6 lg:p-8 rounded-lg xs:rounded-xl sm:rounded-2xl lg:rounded-3xl shadow-md lg:shadow-[0_25px_80px_-40px_rgba(15,23,42,0.8)] border border-slate-700/80 flex flex-col justify-between min-h-[160px] xs:min-h-[180px] sm:min-h-[200px] lg:min-h-[220px] hover:shadow-lg lg:hover:shadow-[0_30px_100px_-35px_rgba(15,23,42,0.95)] transition-shadow duration-200 overflow-hidden`}
               >
-                <div className="flex justify-between items-start">
-                  <div className={`p-3 rounded-xl ${card.iconClass}`}>
+                <div className="flex justify-between items-start gap-2">
+                  <div className={`p-2 xs:p-2.5 sm:p-3 rounded-lg xs:rounded-xl ${card.iconClass} flex-shrink-0`}>
                     {card.icon}
                   </div>
-                  <span className={`text-xs font-bold uppercase tracking-widest text-slate-500`}>
-                    {overview.savingsRate}% saved
+                  <span className={`text-[10px] xs:text-xs font-semibold uppercase tracking-[0.3em] text-slate-400 whitespace-nowrap flex-shrink-0`}>
+                    {savedPercentLabel}% saved
                   </span>
                 </div>
                 <div>
-                  <p className={`text-sm font-medium text-slate-400`}>
+                  <p className={`text-xs xs:text-sm font-medium text-slate-400 leading-tight`}>
                     {card.title}
                   </p>
-                  <h2 className={`text-3xl font-bold mt-1 text-slate-100`}>
+                  <h2 className={`text-lg xs:text-2xl sm:text-2xl lg:text-3xl font-bold mt-1 xs:mt-2 text-slate-100 break-words`}>
                     {card.amount}
                   </h2>
                 </div>
@@ -276,24 +275,23 @@ function Dashboard({ user }) {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
+          <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 gap-4 xs:gap-5 sm:gap-6 lg:gap-8 mb-8 xs:mb-10">
             <MotionDiv variants={itemVars}>
               <RadialGauge title="Income" amount={formatCurrency(income)} percentage={incomePercent} color="#22C55E" />
             </MotionDiv>
             <MotionDiv variants={itemVars}>
               <RadialGauge title="Spent" amount={formatCurrency(spent)} percentage={spentPercent} color="#EF4444" />
             </MotionDiv>
-            <MotionDiv variants={itemVars}>
-              <RadialGauge title="Savings" amount={formatCurrency(savings)} percentage={savingsPercent} color="#38BDF8" />
+            <MotionDiv variants={itemVars} className="xs:col-span-2 lg:col-span-1">
+              <RadialGauge title="Savings" amount={formatCurrency(balanceValue)} percentage={savingsPercent} color="#38BDF8" />
             </MotionDiv>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <MotionDiv
               variants={itemVars}
-              whileHover={{ y: -3 }}
               transition={{ duration: 0.3, ease: "easeOut" }}
-              className="lg:col-span-2 bg-slate-800/95 p-8 rounded-[28px] shadow-[0_28px_90px_-40px_rgba(15,23,42,0.9)] border border-slate-700"
+              className="interactive-card lg:col-span-2 bg-slate-800/95 p-8 rounded-[28px] shadow-[0_28px_90px_-40px_rgba(15,23,42,0.9)] border border-slate-700 hover:shadow-[0_32px_110px_-35px_rgba(15,23,42,0.95)] transition-shadow duration-200 overflow-hidden"
             >
               <div className="flex justify-between items-center mb-8">
                 <h3 className="text-xl lg:text-2xl font-bold text-slate-100">Monthly Cash Flow</h3>
@@ -345,7 +343,7 @@ function Dashboard({ user }) {
 
             <MotionDiv
               variants={itemVars}
-              className="bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-700"
+              className="interactive-card bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-700 overflow-hidden"
             >
               <h3 className="text-xl font-bold text-slate-100 mb-6">Expense Mix</h3>
               <div className="space-y-3">
@@ -357,8 +355,7 @@ function Dashboard({ user }) {
                     return (
                       <motion.div
                         key={item.category}
-                        whileHover={{ x: 2 }}
-                        className={`flex items-center gap-3 p-4 rounded-xl border transition-all duration-300 ${categoryInfo.bg} ${categoryInfo.border} hover:shadow-md`}
+                        className={`interactive-card flex items-center gap-3 p-4 rounded-xl border transition-all duration-300 ${categoryInfo.bg} ${categoryInfo.border} hover:shadow-lg hover:border-opacity-75 overflow-hidden`}
                       >
                         <div className={`flex-shrink-0 p-2 rounded-lg ${categoryInfo.bg} ${categoryInfo.text}`}>
                           <IconComponent size={18} strokeWidth={2} />
@@ -384,7 +381,7 @@ function Dashboard({ user }) {
 
           <MotionDiv
             variants={itemVars}
-            className="bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-700 mt-8"
+            className="interactive-card bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-700 mt-8 overflow-hidden"
           >
             <h3 className="text-xl font-bold text-slate-100 mb-6">Recent Transactions</h3>
             <div className="space-y-4">
@@ -396,8 +393,7 @@ function Dashboard({ user }) {
                   return (
                     <motion.article
                       key={item._id}
-                      whileHover={{ x: 4 }}
-                      className={`flex items-center gap-4 p-5 rounded-2xl border transition-all duration-300 ${categoryInfo.bg} ${categoryInfo.border} hover:shadow-lg hover:border-opacity-50 bg-gradient-to-r from-slate-700/40 to-transparent`}
+                      className={`interactive-card flex items-center gap-4 p-5 sm:p-6 rounded-2xl sm:rounded-3xl border transition-all duration-300 ${categoryInfo.bg} ${categoryInfo.border} hover:shadow-lg hover:border-opacity-75 bg-gradient-to-r from-slate-700/40 to-transparent flex-wrap sm:flex-nowrap overflow-hidden`}
                     >
                       {/* Icon Container */}
                       <div className={`flex-shrink-0 p-3 rounded-xl ${categoryInfo.bg} ${categoryInfo.text}`}>

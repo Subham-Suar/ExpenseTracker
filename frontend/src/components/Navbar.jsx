@@ -47,7 +47,7 @@
 // export default Navbar;
 import React, { useState, useEffect } from "react";
 import { Bell, CalendarRange, LogOut, Search, X, ChevronDown, Menu } from "lucide-react";
-import "./Navbar.css"; // Make sure to link the CSS file below
+import "./Navbar.css";
 
 const formatDisplayDate = () =>
   new Intl.DateTimeFormat("en-IN", {
@@ -56,7 +56,7 @@ const formatDisplayDate = () =>
     year: "numeric",
   }).format(new Date());
 
-function Navbar({ user, onLogout, onToggleSidebar }) {
+function Navbar({ user, onLogout, onToggleSidebar, sidebarWidth = 0, isMobile = false, isFoldTablet = false }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -64,7 +64,6 @@ function Navbar({ user, onLogout, onToggleSidebar }) {
 
   const initials = user?.name?.[0]?.toUpperCase() || "U";
 
-  // Add a sleek glassmorphism effect when scrolling down the page
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -74,11 +73,17 @@ function Navbar({ user, onLogout, onToggleSidebar }) {
   }, []);
 
   return (
-    <header className={`topbar ${isScrolled ? "topbar-scrolled" : ""}`}>
-      {/* Search Section with Focus Animations */}
+    <header
+      className={`topbar ${isScrolled ? "topbar-scrolled" : ""} ${isFoldTablet ? "topbar-fold" : ""}`}
+      style={{
+        left: isMobile ? 0 : sidebarWidth,
+        width: isMobile ? "100%" : `calc(100% - ${sidebarWidth}px)`,
+      }}
+    >
+      {/* Search Section in the MIDDLE */}
       <div className={`topbar-search ${isSearchFocused ? "search-focused" : ""}`}>
         <button
-          className="mobile-menu-button md:hidden mr-3 p-2 rounded-xl bg-slate-800 text-slate-300"
+          className="mobile-menu-button"
           type="button"
           aria-label="Toggle menu"
           onClick={onToggleSidebar}
@@ -105,6 +110,7 @@ function Navbar({ user, onLogout, onToggleSidebar }) {
         )}
       </div>
 
+      {/* Actions on the RIGHT */}
       <div className="topbar-actions">
         {/* Date Pill with Hover Lift */}
         <div className="date-pill">

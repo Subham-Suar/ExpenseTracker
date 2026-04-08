@@ -9,6 +9,7 @@ import Expense from "./pages/Expense";
 import Income from "./pages/Income";
 import Profile from "./pages/Profile";
 import Auth from "./pages/Auth";
+import ResetPassword from "./pages/ResetPassword";
 import { clearSession, loadSession, saveSession } from "./lib/session";
 import { getApiError, getCurrentUser } from "./lib/api";
  //function
@@ -97,6 +98,10 @@ function App() {
               <Auth mode="register" onAuthSuccess={handleAuthSuccess} />
             )
           }
+        />
+        <Route
+          path="/reset-password"
+          element={<ResetPassword />}
         />
         <Route element={<ProtectedRoute isAuthenticated={Boolean(session.token)} />}>
           <Route element={<Layout user={session.user} onLogout={handleLogout} />}>

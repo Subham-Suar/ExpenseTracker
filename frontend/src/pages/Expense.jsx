@@ -202,25 +202,25 @@ export default function Expense() {
   };
 
   return (
-    <div className="p-6 md:p-8 max-w-7xl mx-auto space-y-8">
+    <div className="p-4 xs:p-6 sm:p-8 lg:p-10 w-full space-y-6 xs:space-y-8 bg-slate-900 min-h-screen">
       {/* Header and Filter Toggles */}
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col md:flex-row md:items-center justify-between gap-4"
+        className="flex flex-col gap-4 xs:gap-6"
       >
         <div>
-          <h1 className="text-3xl font-bold text-slate-100 tracking-tight">Expense Analytics</h1>
-          <p className="text-slate-400 mt-1">Track and manage your expenses</p>
+          <h1 className="text-2xl xs:text-3xl sm:text-4xl font-bold text-slate-100 tracking-tight">Expense Analytics</h1>
+          <p className="text-xs xs:text-sm text-slate-400 mt-2">Track and manage your expenses</p>
         </div>
-        <div className="flex bg-slate-800 rounded-xl shadow-sm border border-slate-700 p-1">
+        <div className="flex flex-wrap gap-1.5 xs:gap-2 sm:gap-3 bg-slate-800 rounded-xl xs:rounded-2xl shadow-sm border border-slate-700 p-1.5 xs:p-2 w-fit">
           {["Daily", "Weekly", "Monthly", "Yearly"].map((period) => (
             <button
               key={period}
               onClick={() => setSelectedMode(period)}
-              className={`px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
+              className={`interactive-button px-2.5 xs:px-3 sm:px-4 py-1.5 xs:py-2 sm:py-2.5 text-xs xs:text-sm font-medium rounded-lg xs:rounded-xl transition-all duration-200 whitespace-nowrap ${
                 period === selectedMode
-                  ? "bg-red-500 text-white shadow-lg"
+                  ? "bg-red-500 text-white shadow-lg hover:bg-red-600"
                   : "text-slate-400 hover:text-slate-100 hover:bg-slate-700"
               }`}
             >
@@ -238,84 +238,84 @@ export default function Expense() {
         className="grid grid-cols-1 gap-6"
       >
         {/* Metric Cards Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <motion.div variants={itemVariants} className="bg-slate-800 p-6 rounded-xl border-2 border-red-900/50 shadow-sm flex flex-col justify-between">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-red-500/10 text-red-500 rounded-lg">
-                <DollarSign size={20} />
+        <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 gap-3 xs:gap-4 sm:gap-6">
+          <motion.div variants={itemVariants} className="interactive-card bg-slate-800/95 p-4 xs:p-5 sm:p-6 rounded-lg xs:rounded-xl border-2 border-red-900/50 shadow-md hover:shadow-lg transition-shadow duration-200 flex flex-col justify-between overflow-hidden">
+            <div className="flex items-center gap-2 xs:gap-3 mb-3 xs:mb-4">
+              <div className="p-2 xs:p-2.5 bg-red-500/10 text-red-500 rounded-lg xs:rounded-xl">
+                <DollarSign size={16} className="xs:w-5 xs:h-5 sm:w-5 sm:h-5" />
               </div>
-              <p className="text-sm font-semibold text-slate-400">Total Expenses</p>
+              <p className="text-xs xs:text-sm font-semibold text-slate-400 leading-tight">Total Expenses</p>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-slate-100 mb-1">
+              <h3 className="text-lg xs:text-2xl sm:text-3xl font-bold text-slate-100 mb-1 break-words">
                 ${stats.total.toLocaleString(undefined, { minimumFractionDigits: 0 })}
               </h3>
-              <p className="text-xs text-slate-500 flex items-center gap-1">
-                 <Calendar size={12} /> {stats.subtitle}
+              <p className="text-xs text-slate-500 flex items-center gap-1 flex-wrap">
+                 <Calendar size={12} className="flex-shrink-0" /> <span>{stats.subtitle}</span>
               </p>
             </div>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-sm flex flex-col justify-between">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-red-500/10 text-red-500 rounded-lg">
-                <BarChart2 size={20} />
+          <motion.div variants={itemVariants} className="interactive-card bg-slate-800/95 p-4 xs:p-5 sm:p-6 rounded-lg xs:rounded-xl border border-slate-700 shadow-md hover:shadow-lg transition-shadow duration-200 flex flex-col justify-between overflow-hidden">
+            <div className="flex items-center gap-2 xs:gap-3 mb-3 xs:mb-4">
+              <div className="p-2 xs:p-2.5 bg-red-500/10 text-red-500 rounded-lg xs:rounded-xl">
+                <BarChart2 size={16} className="xs:w-5 xs:h-5 sm:w-5 sm:h-5" />
               </div>
-              <p className="text-sm font-semibold text-slate-400">Average Expense</p>
+              <p className="text-xs xs:text-sm font-semibold text-slate-400 line-clamp-2">Average Expense</p>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-slate-100 mb-1">
+              <h3 className="text-lg xs:text-2xl sm:text-3xl font-bold text-slate-100 mb-1 break-words">
                 ${stats.average.toLocaleString(undefined, { maximumFractionDigits: 0 })}
               </h3>
-              <p className="text-xs text-slate-500 flex items-center gap-1">
-                 <Calendar size={12} /> {stats.transactions} transactions
+              <p className="text-xs text-slate-500 flex items-center gap-1 flex-wrap">
+                 <Calendar size={12} className="flex-shrink-0" /> <span>{stats.transactions} transactions</span>
               </p>
             </div>
           </motion.div>
 
-          <motion.div variants={itemVariants} className="bg-slate-800 p-6 rounded-xl border-2 border-red-900/50 shadow-sm flex flex-col justify-between">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-red-500/10 text-red-500 rounded-lg">
-                <TrendingDown size={20} />
+          <motion.div variants={itemVariants} className="interactive-card bg-slate-800/95 p-4 xs:p-5 sm:p-6 rounded-lg xs:rounded-xl border-2 border-red-900/50 shadow-md hover:shadow-lg transition-shadow duration-200 flex flex-col justify-between xs:col-span-2 sm:col-span-1 overflow-hidden">
+            <div className="flex items-center gap-2 xs:gap-3 mb-3 xs:mb-4">
+              <div className="p-2 xs:p-2.5 bg-red-500/10 text-red-500 rounded-lg xs:rounded-xl">
+                <TrendingDown size={16} className="xs:w-5 xs:h-5 sm:w-5 sm:h-5" />
               </div>
-              <p className="text-sm font-semibold text-slate-400">Transactions</p>
+              <p className="text-xs xs:text-sm font-semibold text-slate-400 line-clamp-2">Transactions</p>
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-slate-100 mb-1">
+              <h3 className="text-lg xs:text-2xl sm:text-3xl font-bold text-slate-100 mb-1">
                 {stats.transactions}
               </h3>
-              <p className="text-xs text-slate-500 flex items-center gap-1">
-                 <Calendar size={12} /> All records
+              <p className="text-xs text-slate-500 flex items-center gap-1 flex-wrap">
+                 <Calendar size={12} className="flex-shrink-0" /> <span>All records</span>
               </p>
             </div>
           </motion.div>
         </div>
 
         {/* Daily Expense Trends Area Chart */}
-        <motion.div variants={itemVariants} className="bg-slate-800 p-6 rounded-xl border border-slate-700 shadow-sm min-h-[400px] flex flex-col">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-2">
-              <BarChart2 className="text-red-500" size={24} />
-              <h3 className="font-semibold text-slate-100 text-lg">
+        <motion.div variants={itemVariants} className="interactive-card bg-slate-800/95 p-4 xs:p-6 sm:p-8 rounded-lg xs:rounded-xl border border-slate-700 shadow-md hover:shadow-lg transition-shadow duration-200 min-h-[300px] xs:min-h-[400px] flex flex-col overflow-hidden">
+          <div className="flex flex-col xs:flex-row xs:items-center justify-between gap-3 xs:gap-4 mb-6 xs:mb-8">
+            <div className="flex items-center gap-2 xs:gap-3 min-w-0">
+              <BarChart2 className="text-red-500 flex-shrink-0" size={20} className="xs:w-6 xs:h-6" />
+              <h3 className="font-semibold text-slate-100 text-sm xs:text-base sm:text-lg truncate">
                 {stats.title}
-                <span className="text-slate-500 font-normal text-sm ml-2 tracking-wide">({stats.subtitle})</span>
+                <span className="text-slate-500 font-normal text-xs xs:text-sm ml-2 tracking-wide">({stats.subtitle})</span>
               </h3>
             </div>
             <button
               onClick={handleExportData}
               disabled={exporting}
-              className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+              className={`flex items-center gap-1.5 xs:gap-2 px-3 xs:px-4 py-1.5 xs:py-2 text-xs xs:text-sm font-medium rounded-lg xs:rounded-xl transition-all whitespace-nowrap flex-shrink-0 ${
                 exporting
                   ? "bg-slate-700 text-slate-400 cursor-not-allowed"
                   : "text-slate-300 bg-slate-800 border border-slate-600 hover:bg-slate-700"
               }`}
             >
-              <Download size={16} /> {exporting ? "Sending..." : "Export Data"}
+              <Download size={14} className="xs:w-4 xs:h-4" /> <span className="hidden xs:inline">{exporting ? "Sending..." : "Export Data"}</span><span className="xs:hidden">{exporting ? "..." : "Export"}</span>
             </button>
           </div>
           
-          <div className="flex-1 w-full h-full">
-            <ResponsiveContainer width="100%" height="100%">
+          <div className="flex-1 w-full">
+            <ResponsiveContainer width="100%" height="100%" minHeight={200}>
               <AreaChart
                 data={stats.chartData}
                 margin={{ top: 10, right: 10, left: -20, bottom: 0 }}
@@ -365,19 +365,20 @@ export default function Expense() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.4 }}
-        className="mt-8 bg-slate-800 rounded-xl shadow-sm border border-slate-700 overflow-hidden"
+        className="interactive-card mt-6 xs:mt-8 bg-slate-800/95 rounded-lg xs:rounded-xl shadow-md border border-slate-700 overflow-hidden"
       >
-        <div className="flex justify-between items-center p-6 border-b border-slate-700">
-           <h3 className="font-semibold text-slate-100 text-lg flex items-center gap-2">
-             <DollarSign className="text-red-500" size={20} />
-             Expense Transactions <span className="text-slate-500 font-normal text-sm ml-1">(This Month)</span>
+        <div className="flex flex-col xs:flex-row xs:items-center xs:justify-between gap-3 xs:gap-4 p-4 xs:p-6 sm:p-8 border-b border-slate-700 flex-wrap">
+           <h3 className="font-semibold text-slate-100 text-base xs:text-lg flex items-center gap-2 flex-shrink-0">
+             <DollarSign className="text-red-500 flex-shrink-0" size={18} className="xs:w-5 xs:h-5" />
+             <span>Expense Transactions</span>
+             <span className="text-slate-500 font-normal text-xs xs:text-sm ml-1 flex-wrap">(This Month)</span>
            </h3>
-           <div className="flex gap-2">
-             <button className="px-4 py-2 text-sm font-medium text-slate-300 bg-slate-800 border border-slate-600 rounded-lg hover:bg-slate-700 transition-colors">
+           <div className="flex flex-wrap gap-2 xs:gap-3">
+             <button className="px-3 xs:px-4 py-1.5 xs:py-2 text-xs xs:text-sm font-medium text-slate-300 bg-slate-800 border border-slate-600 rounded-lg xs:rounded-xl hover:bg-slate-700 transition-colors whitespace-nowrap">
                All Transactions
              </button>
-             <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-300 bg-slate-800 border border-slate-600 rounded-lg hover:bg-slate-700 transition-colors">
-               <Download size={16} /> Export
+             <button className="flex items-center gap-1.5 xs:gap-2 px-3 xs:px-4 py-1.5 xs:py-2 text-xs xs:text-sm font-medium text-slate-300 bg-slate-800 border border-slate-600 rounded-lg xs:rounded-xl hover:bg-slate-700 transition-colors whitespace-nowrap">
+               <Download size={14} className="xs:w-4 xs:h-4" /> <span className="hidden xs:inline">Export</span><span className="xs:hidden">Ex</span>
              </button>
            </div>
         </div>

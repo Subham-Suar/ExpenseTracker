@@ -7,7 +7,7 @@
 :root {
   font-family: "Inter", sans-serif;
   color: #E2E8F0;
-  background: #0F172A;
+  background: radial-gradient(circle at top, rgba(56, 189, 248, 0.08), transparent 24%), radial-gradient(circle at 90% 12%, rgba(59, 130, 246, 0.05), transparent 18%), #0B1220;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -42,6 +42,11 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
+  overflow-x: hidden;
+}
+
+.app-shell {
+  overflow-x: hidden;
 }
 
 button,
@@ -53,25 +58,95 @@ button {
   cursor: pointer;
 }
 
+.interactive-card,
+.interactive-button,
+.interactive-icon-button {
+  position: relative;
+  will-change: transform, box-shadow, border-color;
+  transition:
+    transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 220ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 220ms ease,
+    background-color 220ms ease,
+    filter 220ms ease;
+}
+
+.interactive-card::before,
+.interactive-button::before,
+.interactive-icon-button::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+.interactive-card::before {
+  background: linear-gradient(135deg, rgba(148, 163, 184, 0.06), rgba(255, 255, 255, 0));
+}
+
+.interactive-button::before,
+.interactive-icon-button::before {
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.16), transparent 62%);
+}
+
+.interactive-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: 0 26px 70px -34px rgba(15, 23, 42, 0.9);
+  filter: saturate(1.04);
+}
+
+.interactive-card:hover::before,
+.interactive-button:hover::before,
+.interactive-icon-button:hover::before {
+  opacity: 1;
+}
+
+.interactive-button:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 18px 40px -22px rgba(15, 23, 42, 0.7);
+}
+
+.interactive-icon-button:hover {
+  transform: translateY(-2px) scale(1.06);
+  box-shadow: 0 14px 28px -18px rgba(15, 23, 42, 0.78);
+}
+
+.interactive-card:active,
+.interactive-button:active,
+.interactive-icon-button:active {
+  transform: translateY(0) scale(0.985);
+}
+
 .app-shell {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
 }
 
 .app-main {
   flex: 1;
   min-width: 0;
-  padding: 24px;
-  padding-top: 24px;
+  padding: 0;
+  width: 100%;
 }
 
 .app-content {
-  padding-top: 24px;
+  padding: 0;
+  width: 100%;
 }
 
-@media (max-width: 900px) {
+/* Responsive padding for main content area */
+main {
+  padding: 0;
+}
+
+@media (max-width: 767px) {
   .app-main {
-    padding-top: 112px;
+    margin-left: 0 !important;
   }
 }
 

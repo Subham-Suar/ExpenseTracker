@@ -15,13 +15,17 @@ const listVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.1 }
+    transition: { staggerChildren: 0.08, delayChildren: 0.05 }
   }
 };
 
 const itemVariants = {
   hidden: { opacity: 0, x: -10 },
-  visible: { opacity: 1, x: 0 }
+  visible: { 
+    opacity: 1, 
+    x: 0,
+    transition: { duration: 0.3, ease: "easeOut" }
+  }
 };
 
 export default function TransactionManager({
@@ -141,43 +145,43 @@ export default function TransactionManager({
   }
 
   return (
-    <section className="w-full p-6 md:p-8">
+    <section className="w-full p-4 sm:p-6 lg:p-8">
       {/* Header Section */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-slate-100 tracking-tight">{title}</h1>
-          <p className="text-slate-400 mt-2">Capture, review, and maintain your {typeLabel} records in one place.</p>
+      <div className="flex flex-col gap-3 sm:gap-4 md:flex-row md:items-start md:justify-between mb-6 sm:mb-8">
+        <div className="min-w-0 flex-1">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-100 tracking-tight break-words">{title}</h1>
+          <p className="text-slate-400 mt-1 sm:mt-2 text-sm sm:text-base">Capture, review, and maintain your {typeLabel} records in one place.</p>
         </div>
         <div 
-          className="bg-[#1E293B] border border-[#334155] px-6 py-4 rounded-xl flex flex-col items-end shrink-0"
+          className="w-full md:w-auto bg-[#1E293B] border border-[#334155] px-4 sm:px-6 py-3 sm:py-4 rounded-lg sm:rounded-xl flex flex-col md:items-end shrink-0 whitespace-nowrap"
           style={{ boxShadow: '0 10px 30px rgba(0,0,0,0.35)', transition: 'all 0.25s ease' }}
         >
-          <span className="text-sm font-medium text-slate-400 uppercase tracking-widest mb-1">Total {typeLabel}</span>
-          <strong className="text-2xl font-bold text-slate-100">{formatCurrency(totalAmount)}</strong>
+          <span className="text-xs sm:text-sm font-medium text-slate-400 uppercase tracking-widest mb-0.5 sm:mb-1">Total {typeLabel}</span>
+          <strong className="text-lg sm:text-2xl font-bold text-slate-100">{formatCurrency(totalAmount)}</strong>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-6 lg:gap-8 items-start">
         
         {/* Form Card */}
         <motion.article 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="overflow-hidden bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 p-6 md:p-8 rounded-[36px] border border-slate-800/80 h-full sticky top-24 transform-gpu transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_90px_-30px_rgba(15,23,42,0.8)]"
+          className="interactive-card overflow-hidden bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl lg:rounded-[36px] border border-slate-800/80 self-start xl:sticky xl:top-24 transform-gpu transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_90px_-30px_rgba(15,23,42,0.8)]"
           style={{ boxShadow: '0 18px 50px rgba(15,23,42,0.45)' }}
         >
           <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-sky-400 via-emerald-400 to-violet-500" />
-          <div className="relative mb-6 pb-4 border-b border-slate-800/70">
-            <h2 className="text-2xl font-bold text-slate-50">{editingId ? `Edit ${typeLabel}` : `Add ${typeLabel}`}</h2>
-            <p className="text-sm text-slate-400 mt-2 max-w-xl">Fill in a clear description, amount, category and date to instantly update your tracker.</p>
+          <div className="relative mb-4 sm:mb-6 pb-4 sm:pb-6 border-b border-slate-800/70">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-50">{editingId ? `Edit ${typeLabel}` : `Add ${typeLabel}`}</h2>
+            <p className="text-xs sm:text-sm text-slate-400 mt-1 sm:mt-2 max-w-xl">Fill in a clear description, amount, category and date to instantly update your tracker.</p>
           </div>
 
-          <form className="flex flex-col space-y-5" onSubmit={handleSubmit}>
+          <form className="flex flex-col space-y-4 sm:space-y-5" onSubmit={handleSubmit}>
             <div>
-              <label className="block text-sm font-semibold text-slate-200 mb-1.5">Description</label>
+              <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-1 sm:mb-1.5">Description</label>
               <input
-                className="w-full bg-slate-950 border border-slate-700 text-slate-100 rounded-[24px] px-4 py-3 outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/40 placeholder:text-slate-500 shadow-[0_14px_30px_-22px_rgba(7,89,133,0.45)]"
+                className="w-full bg-slate-950 border border-slate-700 text-slate-100 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-2 sm:py-3 outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/40 placeholder:text-slate-500 shadow-[0_14px_30px_-22px_rgba(7,89,133,0.45)] text-sm sm:text-base"
                 style={{ transition: 'all 0.25s ease' }}
                 value={form.description}
                 onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))}
@@ -186,11 +190,11 @@ export default function TransactionManager({
               />
             </div>
             
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-sm font-semibold text-slate-200 mb-1.5">Amount</label>
+                <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-1 sm:mb-1.5">Amount</label>
                 <input
-                  className="w-full bg-slate-950 border border-slate-700 text-slate-100 rounded-[24px] px-4 py-3 outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/40 placeholder:text-slate-500 shadow-[0_14px_30px_-22px_rgba(7,89,133,0.45)]"
+                  className="w-full bg-slate-950 border border-slate-700 text-slate-100 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-2 sm:py-3 outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/40 placeholder:text-slate-500 shadow-[0_14px_30px_-22px_rgba(7,89,133,0.45)] text-sm sm:text-base"
                   style={{ transition: 'all 0.25s ease' }}
                   value={form.amount}
                   onChange={(event) => setForm((current) => ({ ...current, amount: event.target.value }))}
@@ -202,9 +206,9 @@ export default function TransactionManager({
                 />
               </div>
               <div>
-                <label className="block text-sm font-semibold text-slate-200 mb-1.5">Category</label>
+                <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-1 sm:mb-1.5">Category</label>
                 <input
-                  className="w-full bg-slate-950 border border-slate-700 text-slate-100 rounded-[24px] px-4 py-3 outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/40 placeholder:text-slate-500 shadow-[0_14px_30px_-22px_rgba(7,89,133,0.45)]"
+                  className="w-full bg-slate-950 border border-slate-700 text-slate-100 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-2 sm:py-3 outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/40 placeholder:text-slate-500 shadow-[0_14px_30px_-22px_rgba(7,89,133,0.45)] text-sm sm:text-base"
                   style={{ transition: 'all 0.25s ease' }}
                   value={form.category}
                   onChange={(event) => setForm((current) => ({ ...current, category: event.target.value }))}
@@ -215,9 +219,9 @@ export default function TransactionManager({
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-slate-200 mb-1.5">Date</label>
+              <label className="block text-xs sm:text-sm font-semibold text-slate-200 mb-1 sm:mb-1.5">Date</label>
               <input
-                className="w-full bg-slate-950 border border-slate-700 text-slate-100 rounded-[24px] px-4 py-3 outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/40"
+                className="w-full bg-slate-950 border border-slate-700 text-slate-100 rounded-xl sm:rounded-2xl px-3 sm:px-4 py-2 sm:py-3 outline-none focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/40 text-sm sm:text-base"
                 style={{ transition: 'all 0.25s ease' }}
                 value={form.date}
                 onChange={(event) => setForm((current) => ({ ...current, date: event.target.value }))}
@@ -226,20 +230,20 @@ export default function TransactionManager({
               />
             </div>
 
-            {error ? <p className="text-red-400 text-sm font-medium p-3 bg-red-400/10 rounded-lg">{error}</p> : null}
+            {error ? <p className="text-red-400 text-xs sm:text-sm font-medium p-2 sm:p-3 bg-red-400/10 rounded-lg">{error}</p> : null}
 
-            <div className="pt-4 flex flex-col sm:flex-row gap-3">
+            <div className="pt-3 sm:pt-4 flex flex-col sm:flex-row gap-2 sm:gap-3">
               <button 
-                className={`flex-1 flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl font-bold border border-cyan-400 bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20 hover:scale-[1.01] hover:bg-cyan-400 transition-all duration-200 ${accentClass}`}
+                className={`interactive-button flex-1 flex items-center justify-center gap-2 px-4 sm:px-6 py-2.5 sm:py-3.5 rounded-xl sm:rounded-2xl font-bold border border-cyan-400 bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20 hover:scale-[1.01] hover:bg-cyan-400 transition-all duration-200 text-sm sm:text-base overflow-hidden ${accentClass}`}
                 type="submit" 
                 disabled={submitting}
               >
-                <PlusCircle size={18} />
+                <PlusCircle size={16} className="sm:w-[18px] sm:h-[18px]" />
                 <span>{submitting ? "Saving..." : editingId ? "Update entry" : "Add entry"}</span>
               </button>
               {editingId ? (
                 <button 
-                  className="px-6 py-3.5 rounded-2xl font-bold transition-all border border-slate-700 text-slate-200 bg-slate-950 hover:bg-slate-900 hover:text-sky-300" 
+                  className="interactive-button px-4 sm:px-6 py-2.5 sm:py-3.5 rounded-xl sm:rounded-2xl font-bold transition-all border border-slate-700 text-slate-200 bg-slate-950 hover:bg-slate-900 hover:text-sky-300 text-sm sm:text-base overflow-hidden" 
                   type="button" 
                   onClick={resetForm}
                 >
@@ -255,36 +259,37 @@ export default function TransactionManager({
           initial={{ opacity: 0, y: 22 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.2 }}
-          className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-6 md:p-8 rounded-[36px] border border-slate-800/70 shadow-[0_28px_100px_-40px_rgba(15,23,42,0.9)] flex flex-col h-full"
+          className="interactive-card relative overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl lg:rounded-[36px] border border-slate-800/70 shadow-[0_28px_100px_-40px_rgba(15,23,42,0.9)] flex flex-col h-full"
         >
           <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-sky-400 via-emerald-400 to-violet-500" />
-          <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 pb-6 border-b border-slate-800/70">
-            <div className="min-w-0">
-              <h2 className="text-2xl lg:text-3xl font-bold text-slate-50 tracking-tight truncate">Recent {title}</h2>
+          
+          {loading && items.length > 0 ? (
+            <div className="flex items-center justify-start gap-2 bg-sky-500/10 border border-sky-500/20 px-3 sm:px-4 py-2 sm:py-2.5 text-xs sm:text-sm text-sky-300 backdrop-blur-xl rounded-lg mb-4 w-fit">
+              <div className="h-2 w-2 rounded-full bg-sky-400 animate-pulse flex-shrink-0" />
+              <span>Refreshing records…</span>
             </div>
-            <span className="shrink-0 inline-flex items-center gap-2 rounded-full bg-slate-900/90 border border-slate-700 px-5 py-3 text-sm font-semibold text-slate-200 shadow-[0_10px_30px_-16px_rgba(15,23,42,0.8)]">
-              <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse" />
+          ) : null}
+          
+          <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4 mb-4 sm:mb-6 pb-4 sm:pb-6 border-b border-slate-800/70">
+            <div className="min-w-0 flex-1">
+              <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-slate-50 tracking-tight break-words">Recent {title}</h2>
+            </div>
+            <span className="shrink-0 inline-flex items-center gap-2 rounded-full bg-slate-900/90 border border-slate-700 px-3 sm:px-4 lg:px-5 py-2 sm:py-3 text-xs sm:text-sm font-semibold text-slate-200 shadow-[0_10px_30px_-16px_rgba(15,23,42,0.8)] whitespace-nowrap">
+              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
               {items.length} records
             </span>
           </div>
 
           {loading && items.length === 0 ? (
-            <div className="flex-1 flex flex-col items-center justify-center py-16">
-              <div className="animate-pulse rounded-full h-12 w-12 bg-slate-700 mb-5" />
-              <p className="text-sm text-slate-400 font-medium">Loading {typeLabel}…</p>
-            </div>
-          ) : null}
-
-          {loading && items.length > 0 ? (
-            <div className="absolute inset-x-0 top-0 z-10 flex items-center justify-center gap-3 bg-slate-950/95 border-b border-slate-800 py-3 text-sm text-slate-300 backdrop-blur-xl">
-              <div className="h-2.5 w-2.5 rounded-full bg-sky-400 animate-pulse" />
-              Refreshing records…
+            <div className="flex-1 flex flex-col items-center justify-center py-12 sm:py-16">
+              <div className="animate-pulse rounded-full h-10 sm:h-12 w-10 sm:w-12 bg-slate-700 mb-3 sm:mb-5" />
+              <p className="text-xs sm:text-sm text-slate-400 font-medium">Loading {typeLabel}…</p>
             </div>
           ) : null}
 
           {!loading && !items.length ? (
-            <div className="flex-1 flex items-center justify-center py-16">
-              <p className="text-sm text-slate-500 font-medium">{emptyText}</p>
+            <div className="flex-1 flex items-center justify-center py-12 sm:py-16">
+              <p className="text-xs sm:text-sm text-slate-500 font-medium text-center px-4">{emptyText}</p>
             </div>
           ) : null}
 
@@ -293,46 +298,49 @@ export default function TransactionManager({
               variants={listVariants}
               initial="hidden"
               animate="visible"
-              className="flex flex-col gap-3"
+              className="flex flex-col gap-2 sm:gap-3"
             >
               <AnimatePresence>
                 {items.map((item) => (
                   <motion.div 
                     key={item._id || item.id}
-                    layout
                     variants={itemVariants}
+                    initial="hidden"
+                    animate="visible"
                     exit={{ opacity: 0, scale: 0.96, transition: { duration: 0.18 } }}
-                    whileHover={{ y: -2 }}
-                    className="group relative overflow-hidden rounded-3xl border border-slate-800 bg-slate-900/95 p-5 shadow-[0_18px_50px_-28px_rgba(15,23,42,0.8)] transition-all duration-300"
+                    className="interactive-card group relative rounded-2xl sm:rounded-3xl border border-slate-800 bg-slate-900/95 p-4 sm:p-5 lg:p-6 shadow-[0_18px_50px_-28px_rgba(15,23,42,0.8)] transition-all duration-200 hover:shadow-[0_20px_60px_-25px_rgba(15,23,42,0.95)] overflow-hidden"
                   >
                     <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-sky-400 via-emerald-400 to-violet-500 opacity-80" />
-                    <div className="relative flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                      <div className="min-w-0">
-                        <strong className="text-lg font-semibold text-slate-100 tracking-tight block mb-1 truncate capitalize">{item.description}</strong>
-                        <p className="text-sm text-slate-400 flex flex-wrap items-center gap-2">
-                          <span className="inline-flex items-center rounded-full border border-slate-800 bg-slate-950/80 px-3 py-1 text-xs text-slate-300">{item.category}</span>
-                          <span>•</span>
-                          <span>{formatDate(item.date)}</span>
-                        </p>
+                    <div className="relative flex flex-col gap-3 sm:gap-4 lg:gap-5">
+                      {/* Title and metadata */}
+                      <div className="min-w-0 flex-shrink-0 pr-2">
+                        <strong className="text-sm sm:text-base lg:text-lg font-semibold text-slate-100 tracking-tight block mb-2 truncate capitalize">{item.description}</strong>
+                        <div className="flex flex-col xs:flex-row xs:items-center gap-1 xs:gap-2 flex-wrap">
+                          <span className="inline-flex items-center rounded-full border border-slate-800 bg-slate-950/80 px-2 xs:px-2.5 sm:px-3 py-0.5 xs:py-1 text-xs font-medium text-slate-300 w-fit flex-shrink-0">{item.category}</span>
+                          <span className="hidden xs:inline text-slate-700 flex-shrink-0">•</span>
+                          <span className="text-xs text-slate-400 flex-shrink-0">{formatDate(item.date)}</span>
+                        </div>
                       </div>
-                      <div className="flex flex-col items-end gap-3 shrink-0">
-                        <span className={`text-2xl font-semibold ${accentClass}`}>{formatCurrency(item.amount)}</span>
-                        <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+
+                      {/* Amount and action buttons */}
+                      <div className="flex items-center justify-between gap-2 xs:gap-3 sm:gap-4 w-full flex-wrap xl:flex-nowrap">
+                        <span className={`text-base xs:text-lg sm:text-2xl lg:text-3xl font-bold break-words flex-1 min-w-fit ${accentClass}`}>{formatCurrency(item.amount)}</span>
+                        <div className="flex items-center gap-1.5 xs:gap-2 sm:gap-2.5 flex-shrink-0">
                           <button 
                             type="button" 
                             onClick={() => handleEdit(item)} 
                             aria-label="Edit entry"
-                            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-800 bg-slate-950 text-slate-300 hover:bg-slate-900 hover:text-sky-400 transition"
+                            className="interactive-icon-button inline-flex h-8 xs:h-9 sm:h-10 lg:h-11 w-8 xs:w-9 sm:w-10 lg:w-11 items-center justify-center rounded-lg xs:rounded-xl sm:rounded-2xl border border-slate-700 bg-slate-950 text-slate-300 hover:border-sky-400 hover:bg-slate-900 hover:text-sky-300 active:scale-95 transition flex-shrink-0 overflow-hidden"
                           >
-                            <Pencil size={16} />
+                            <Pencil size={14} className="xs:w-4 xs:h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
                           </button>
                           <button 
                             type="button" 
                             onClick={() => handleDelete(item._id || item.id)} 
                             aria-label="Delete entry"
-                            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-slate-800 bg-slate-950 text-slate-300 hover:bg-slate-900 hover:text-rose-400 transition"
+                            className="interactive-icon-button inline-flex h-8 xs:h-9 sm:h-10 lg:h-11 w-8 xs:w-9 sm:w-10 lg:w-11 items-center justify-center rounded-lg xs:rounded-xl sm:rounded-2xl border border-slate-700 bg-slate-950 text-slate-300 hover:border-rose-400 hover:bg-slate-900 hover:text-rose-300 active:scale-95 transition flex-shrink-0 overflow-hidden"
                           >
-                            <Trash2 size={16} />
+                            <Trash2 size={14} className="xs:w-4 xs:h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6" />
                           </button>
                         </div>
                       </div>
